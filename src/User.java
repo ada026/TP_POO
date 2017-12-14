@@ -1,4 +1,4 @@
-﻿import java.io.IOException;
+import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +31,7 @@ public class User {
         
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
         Thread threadSend = new ThreadSend("thread send", this);
-        threadSend.start();
+       // threadSend.start();
         
         Thread threadReceive = new ThreadReceive("thread receive", this);
         threadReceive.start();
@@ -65,8 +65,4 @@ public class User {
     public void setListUser(String pseudo, String ip){
         this.listUser.put(pseudo, ip);
     }
-    
-    
-
-
 }
