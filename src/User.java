@@ -93,4 +93,9 @@ public class User {
         }
         return false;
     }
+    
+    public int getPort(){
+        return socketEnvoi.getLocalPort();
+    }
+    
 }

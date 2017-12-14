@@ -14,7 +14,7 @@ public class ThreadReceiveTCP extends Thread {
         
           try {
               System.out.println("Lancement de l'ecoute tcp");
-              client1Socket = new ServerSocket(45048);
+              client1Socket = new ServerSocket(Main.user.getPort());
           } catch (IOException ex) {
               Logger.getLogger(ThreadReceiveTCP.class.getName()).log(Level.SEVERE, null, ex);
           }

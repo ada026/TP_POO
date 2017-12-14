@@ -22,7 +22,8 @@ public class ThreadMenu extends Thread {
                    case 1: System.out.println(Main.user.getListUser().toString());
                        break;
                    case 2: System.out.println("A qui veux tu parler ? entre son pseudo ");
-                           String pseudo = sc.nextLine();
+                           String pseudo = sc.next();
+                           System.out.println("pseudo entré: " + pseudo);
                            String[] info = Main.user.getListUser().get(pseudo).toString().split("-");
                            
                            Main.user.startThreadTCP(info[0], parseInt(info[1],10));
