@@ -4,12 +4,9 @@ import java.net.InetAddress;
 import java.util.HashMap;
 
 public class ThreadReceive extends Thread {
-
     
-        private static User user;
-        public ThreadReceive(String name, User user1){
+        public ThreadReceive(String name){
             super(name);
-            user = user1;
         }
 
         public void run(){
@@ -42,9 +39,10 @@ public class ThreadReceive extends Thread {
             //System.out.println("nouveau client : " + recvStr + "\n voici son adresse IP : " + addr + " et voici son port : " + port);
           //  System.out.println("pseudo recu : "  + recvStr);
 
-            if( !user.belongList(recvStr)){
-            SendMessage.sendMessage(addr, port, user);
-            ajoutUserListe(recvStr, addr.toString());
+            if( !Main.user.belongList(recvStr)){
+            SendMessage.sendMessage(addr, port);
+            ajoutUserListe(recvStr, addr.toString()+"-"+port);
+            
             }
             
             else{
@@ -56,7 +54,8 @@ public class ThreadReceive extends Thread {
     }
     
     public synchronized static void ajoutUserListe(String pseudo, String ip){
-            user.setListUser(pseudo,ip);
+            
+            Main.user.setListUser(pseudo,ip);
             
           //  System.out.println(user.getListUser().toString());
 

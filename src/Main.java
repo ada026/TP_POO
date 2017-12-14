@@ -2,8 +2,16 @@
 import java.util.Scanner;
 
 public class Main {
+    static public User user;
+    
     public static void main(String[] args){
-        User user1 = new User("elyes2");
-  
+        user = new User("elyes2");
+        user.startThread();
     }
+    
+    public User getUser(){
+        return user;
+    }
+    
+    
 }

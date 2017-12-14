@@ -30,17 +30,29 @@ public class User {
         this.pseudo = pseudo;
         
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
-        Thread threadSend = new ThreadSend("thread send", this);
+        
+
+    }
+    
+    public void startThread(){
+        Thread threadSend = new ThreadSend("thread send");
         threadSend.start();
         
-        Thread threadReceive = new ThreadReceive("thread receive", this);
+        Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
         
-        ThreadMenu threadMenu = new ThreadMenu("thread menu", this);
+        ThreadMenu threadMenu = new ThreadMenu("thread menu");
         threadMenu.start();
         
         
+    }
+    
+    public void startThreadTCP(String ip , int port){
+        ThreadReceiveTCP threadReceiveTCP = new ThreadReceiveTCP("name");
+        threadReceiveTCP.start();
         
+        ThreadSendTCP threadSendTCP = new ThreadSendTCP("name",ip,port);
+        threadSendTCP.start();
     }
 
     public User getUser(){
@@ -71,8 +83,8 @@ public class User {
         return this.listUser;
     }
     
-    public void setListUser(String pseudo, String ip){
-        this.listUser.put(pseudo, ip);
+    public void setListUser(String pseudo, String ipPort){
+        this.listUser.put(pseudo, ipPort);
     }
     
     public boolean belongList(String pseudo){

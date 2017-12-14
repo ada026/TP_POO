@@ -6,24 +6,22 @@ import java.util.logging.Logger;
 
 public class ThreadSend extends Thread{
         
-    private User user ;
-    public ThreadSend(String name, User user){
+    public ThreadSend(String name){
         super(name);
-        this.user = user;
     }
 
     public void run(){
         
         try {
-            sendMessageBroadcast(user);
+            sendMessageBroadcast();
         } catch (IOException ex) {
             Logger.getLogger(ThreadSend.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void sendMessageBroadcast(User user) throws IOException {
-
-        String data = user.getPseudo() ;
+    public static void sendMessageBroadcast() throws IOException {
+        System.out.println(Main.user);
+        String data = Main.user.getPseudo();
         User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
