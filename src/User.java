@@ -31,7 +31,7 @@ public class User {
         
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
         Thread threadSend = new ThreadSend("thread send", this);
-       // threadSend.start();
+        threadSend.start();
         
         Thread threadReceive = new ThreadReceive("thread receive", this);
         threadReceive.start();

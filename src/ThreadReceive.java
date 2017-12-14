@@ -45,6 +45,8 @@ public class ThreadReceive extends Thread {
            
             
             ajoutUserListe(recvStr, addr.toString());
+            SendMessage.sendMessage(addr, port, user);
+            
             
         }
 

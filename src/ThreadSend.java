@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ThreadSend extends Thread{
         
@@ -11,18 +13,13 @@ public class ThreadSend extends Thread{
     }
 
     public void run(){
+        
         try {
-            for(int i=0;i<10;i++) {
-                sendMessageBroadcast(user);
-                try {
-                    sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            sendMessageBroadcast(user);
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadSend.class.getName()).log(Level.SEVERE, null, ex);
         }
+             
     }
 
     public static void sendMessageBroadcast(User user) throws IOException {
