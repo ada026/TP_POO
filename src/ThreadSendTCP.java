@@ -12,7 +12,6 @@ public class ThreadSendTCP extends Thread {
     
     private String ip;
     private int port;
-    private Socket socket;
     
      public ThreadSendTCP(String name, String ip1, int port1){
         super(name);
@@ -22,6 +21,7 @@ public class ThreadSendTCP extends Thread {
      }
      
      public void run() {
+        Socket socket;
 
         try {
             socket = new Socket(ip,port);
@@ -30,13 +30,14 @@ public class ThreadSendTCP extends Thread {
             BufferedReader reader = new BufferedReader(stream);
             String message = reader.readLine();
             System.out.println("le client m'a rep : " + message );
+            loopMsg(socket);
             
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
         } 
      } 
      
-     public void loopMsg() throws IOException{
+     public void loopMsg(Socket socket) throws IOException{
          while(true){
             InputStreamReader stream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(stream);

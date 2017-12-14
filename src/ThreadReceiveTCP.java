@@ -30,12 +30,14 @@ public class ThreadReceiveTCP extends Thread {
             try {
                 System.out.println("port ou jessaye d'ecouter : " + client1Socket.getLocalPort());
                 Socket client2Socket = client1Socket.accept();
-                System.out.println("Connexion effective");   
+                System.out.println("Connexion effective");
                 PrintWriter writer = new PrintWriter(client2Socket.getOutputStream());
                 while (client1Socket.isBound()){
-                    System.out.println("message a envoyer : ");
-                    writer.println(sc.next());
+                    //System.out.println("message a envoyer : ");
+                    //writer.println(sc.next());
+                 //    writer.println("coucou");
                 }
+               writer.println("coucou");
                 writer.close(); 
             } catch (IOException ex) {
                 Logger.getLogger(ThreadReceiveTCP.class.getName()).log(Level.SEVERE, null, ex);
