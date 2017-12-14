@@ -7,6 +7,9 @@ public class Main {
     public static void main(String[] args){
         user = new User("elyes2");
         user.startThread();
+        
+        
+        
     }
     
     public User getUser(){

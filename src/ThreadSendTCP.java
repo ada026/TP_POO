@@ -24,6 +24,7 @@ public class ThreadSendTCP extends Thread {
         Socket socket;
         try {
             socket = new Socket(ip,port);
+            System.out.println("port ou jessaye d'envoyer "+ port );
             InputStreamReader stream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(stream);
             String message = reader.readLine();
@@ -31,10 +32,7 @@ public class ThreadSendTCP extends Thread {
             
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-
-         
+        } 
      } 
      
      

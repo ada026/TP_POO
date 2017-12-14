@@ -41,8 +41,7 @@ public class ThreadReceive extends Thread {
 
             if( !Main.user.belongList(recvStr)){
             SendMessage.sendMessage(addr, port);
-            ajoutUserListe(recvStr, addr.toString()+"-"+port);
-            
+            ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
             }
             
             else{

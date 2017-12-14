@@ -8,9 +8,15 @@ import java.util.logging.Logger;
 
 public class ThreadReceiveTCP extends Thread {
     
+    ServerSocket client1Socket = null;
+    
       public ThreadReceiveTCP(String name){
         super(name);
-        ServerSocket client1Socket = null;
+        
+      }
+      
+      public void run(){
+          
         
           try {
               System.out.println("Lancement de l'ecoute tcp");
@@ -21,6 +27,8 @@ public class ThreadReceiveTCP extends Thread {
           
           while(true){
             try {
+                
+                System.out.println("port ou jessaye d'ecouter : " + client1Socket.getLocalPort());
                 Socket client2Socket = client1Socket.accept();
                 System.out.println("Connexion effective");   
                 PrintWriter writer = new PrintWriter(client2Socket.getOutputStream());
@@ -31,12 +39,5 @@ public class ThreadReceiveTCP extends Thread {
             }
               
           }
-          
-    }
-    
-   
-    
-     
-      
-      
+      }  
 }
