@@ -32,7 +32,8 @@ public class ThreadReceiveTCP extends Thread {
                 Socket client2Socket = client1Socket.accept();
                 System.out.println("Connexion effective");   
                 PrintWriter writer = new PrintWriter(client2Socket.getOutputStream());
-                while (client2Socket.isConnected()){
+                while (client1Socket.isBound()){
+                    System.out.println("message a envoyer : ");
                     writer.println(sc.next());
                 }
                 writer.close(); 
