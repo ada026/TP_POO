@@ -1,20 +1,24 @@
-import java.io.IOException;
+﻿import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static java.lang.Thread.sleep;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String pseudo;
     private static DatagramSocket socketEnvoi;
     private static DatagramSocket socketEcoute;
-    private ArrayList<String> listUser;
     private static boolean firstMsg = false;
+    
+    private HashMap<String, String> listUser ;
 
 
     public User(String pseudo){
-        listUser = new ArrayList<>();
+        listUser = new HashMap<>();
+        
         try {
             this.socketEnvoi = new DatagramSocket();
 
@@ -24,14 +28,14 @@ public class User {
             e.printStackTrace();
         }
         this.pseudo = pseudo;
-
+        
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
-        Thread threadSend = new ThreadSend("thread send");
+        Thread threadSend = new ThreadSend("thread send", this);
         threadSend.start();
-
-        Thread threadReceive = new ThreadReceive("thread receive");
+        
+        Thread threadReceive = new ThreadReceive("thread receive", this);
         threadReceive.start();
-
+        
     }
 
     public String getPseudo(){
@@ -45,16 +49,24 @@ public class User {
     public String toString() {
         return this.pseudo;
     }
-
+    
     public static DatagramSocket getSocketEnvoi(){
         return socketEnvoi;
     }
-
+    
     public static DatagramSocket getSocketEcoute(){
         return socketEcoute;
     }
-
-
+    
+    public HashMap getListUser(){
+        return this.listUser;
+    }
+    
+    public void setListUser(String pseudo, String ip){
+        this.listUser.put(pseudo, ip);
+    }
+    
+    
 
 
 }

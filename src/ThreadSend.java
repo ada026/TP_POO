@@ -1,17 +1,19 @@
-import java.io.IOException;
+﻿import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 public class ThreadSend extends Thread{
-
-    public ThreadSend(String name){
+        
+    private User user ;
+    public ThreadSend(String name, User user){
         super(name);
+        this.user = user;
     }
 
     public void run(){
         try {
             for(int i=0;i<10;i++) {
-                sendMessageBroadcast();
+                sendMessageBroadcast(user);
                 try {
                     sleep(3000);
                 } catch (InterruptedException e) {
@@ -23,9 +25,9 @@ public class ThreadSend extends Thread{
         }
     }
 
-    public static void sendMessageBroadcast() throws IOException {
+    public static void sendMessageBroadcast(User user) throws IOException {
 
-        String data = "Easy" ;
+        String data = user.getPseudo() ;
         User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
