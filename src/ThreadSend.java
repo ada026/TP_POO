@@ -26,7 +26,7 @@ public class ThreadSend extends Thread{
     public static void sendMessageBroadcast() throws IOException {
 
         String data = "Easy" ;
-        SendMessage.getSocketEnvoi().setBroadcast(true);
+        User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
                 data.getBytes().length, address, 45047);
@@ -35,8 +35,7 @@ public class ThreadSend extends Thread{
 
         System.out.println("J'ai envoyé mon paquet en broadcast");
 
-        SendMessage.getSocketEnvoi().send(packet);
-        //socket_envoi.send(packet2);
+        User.getSocketEnvoi().send(packet);
     }
 
 }

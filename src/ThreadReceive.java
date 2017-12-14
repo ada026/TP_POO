@@ -4,17 +4,17 @@ import java.net.InetAddress;
 
 public class ThreadReceive extends Thread {
 
-        public ThreadReceive(String name){
-            super(name);
-        }
+    public ThreadReceive(String name){
+        super(name);
+    }
 
-        public void run(){
-            try {
-                receiveMessage();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void run(){
+        try {
+            receiveMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
     public static void receiveMessage() throws IOException {
 
@@ -26,7 +26,7 @@ public class ThreadReceive extends Thread {
             DatagramPacket recvPacket = new DatagramPacket(recvBuf, recvBuf.length);
 
             try {
-                SendMessage.getSocketEcoute().receive(recvPacket);
+                User.getSocketEcoute().receive(recvPacket);
             } catch (IOException e) {
                 e.printStackTrace();
             }
