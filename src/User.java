@@ -36,8 +36,17 @@ public class User {
         Thread threadReceive = new ThreadReceive("thread receive", this);
         threadReceive.start();
         
+        ThreadMenu threadMenu = new ThreadMenu("thread menu", this);
+        threadMenu.start();
+        
+        
+        
     }
 
+    public User getUser(){
+        return this;
+    } 
+    
     public String getPseudo(){
         return this.pseudo;
     }
@@ -64,5 +73,12 @@ public class User {
     
     public void setListUser(String pseudo, String ip){
         this.listUser.put(pseudo, ip);
+    }
+    
+    public boolean belongList(String pseudo){
+        if (listUser.containsKey(pseudo)){
+            return true;
+        }
+        return false;
     }
 }

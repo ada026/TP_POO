@@ -19,7 +19,7 @@ public class SendMessage {
         String data = user.getPseudo();
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
                 data.getBytes().length, address, 45047);
-        System.out.println("J'ai renvoyé mon paquet apres l'ecoute sur le port : " + 45047);
+        //System.out.println("J'ai renvoyé mon paquet apres l'ecoute sur le port : " + 45047);
         
         
         User.getSocketEcoute().send(packet);

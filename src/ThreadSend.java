@@ -19,7 +19,6 @@ public class ThreadSend extends Thread{
         } catch (IOException ex) {
             Logger.getLogger(ThreadSend.class.getName()).log(Level.SEVERE, null, ex);
         }
-             
     }
 
     public static void sendMessageBroadcast(User user) throws IOException {
@@ -32,7 +31,7 @@ public class ThreadSend extends Thread{
         //DatagramPacket packet2 = new DatagramPacket(data.getBytes(),
         // data.getBytes().length, address, 45048);
 
-        System.out.println("J'ai envoyé mon paquet en broadcast");
+        // System.out.println("J'ai envoyé mon paquet en broadcast");
 
         User.getSocketEnvoi().send(packet);
     }
