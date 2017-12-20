@@ -16,41 +16,35 @@ public class ThreadSendTCP extends Thread {
         super(name);
         ip = ip1;
         port = port1;
-
      }
      
      public void run() {
          
-        Socket socket;
+       Socket socket;
         try {
-            socket = new Socket(ip,port);
-            System.out.println("port ou jessaye d'envoyer "+ port );
+            socket = new Socket("192.168.2.5",45001);
+            System.out.println("port ou jessaye d'envoyer "+ 45001 );
+            
+             if(socket.isConnected()){   //Envoie des msgs
+            ThreadTesssst thread = new ThreadTesssst("ee", socket);
+            thread.start();
+            System.out.println("démarrage du thread d'envoie des msgs");
+            }
+             
             InputStreamReader stream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(stream);
-            String message = reader.readLine();
-            System.out.println("le client m'a rep : " + message );  
-            System.out.println("je vais lui rep ");
-            testMsg(socket);
-            System.out.println("je lui ai rep ");
+            
+            while(socket.isConnected()){  // Boucle de réception des msgs
+                String a = reader.readLine();
+               if (a != null ){
+                System.out.println("le client m'a envoyé : " + a ); 
+               }
+            }   
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-        
      }
-     
-     public void testMsg(Socket socket){
-         PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(socket.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                writer.println("Coucou ");
-                writer.close(); 
-     }
-     
      
 
 }

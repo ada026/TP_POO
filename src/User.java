@@ -15,7 +15,6 @@ public class User {
     
     private HashMap<String, String> listUser ;
 
-
     public User(String pseudo){
         listUser = new HashMap<>();
         
@@ -30,8 +29,6 @@ public class User {
         this.pseudo = pseudo;
         
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
-        
-
     }
     
     public void startThread(){
@@ -44,7 +41,7 @@ public class User {
         ThreadMenu threadMenu = new ThreadMenu("thread menu");
         threadMenu.start();
         
-        ThreadReceiveTCP threadReceiveTCP = new ThreadReceiveTCP("name");
+        ThreadReceiveTCP threadReceiveTCP = new ThreadReceiveTCP("receive tcp");
         threadReceiveTCP.start();
         
         

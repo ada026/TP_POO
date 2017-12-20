@@ -46,7 +46,5 @@ public class ThreadISendTCP {
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    
+    } 
 }

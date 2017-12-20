@@ -1,43 +1,47 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ThreadReceiveTCP extends Thread {
+    static public User user;
     
-    ServerSocket client1Socket = null;
-    
-      public ThreadReceiveTCP(String name){
-        super(name);
-        
-      }
-      
-      public void run(){
-          
-        
-          try {
-              System.out.println("Lancement de l'ecoute tcp");
-              client1Socket = new ServerSocket(Main.user.getPort());
-          } catch (IOException ex) {
-              Logger.getLogger(ThreadReceiveTCP.class.getName()).log(Level.SEVERE, null, ex);
-          }
-          
-          while(true){
-            try {
-                
-                System.out.println("port ou jessaye d'ecouter : " + client1Socket.getLocalPort());
-                Socket client2Socket = client1Socket.accept();
-                System.out.println("Connexion effective");   
-                PrintWriter writer = new PrintWriter(client2Socket.getOutputStream());
-                writer.println("Coucou ");
-                writer.close();
-                
-            } catch (IOException ex) {
-                Logger.getLogger(ThreadReceiveTCP.class.getName()).log(Level.SEVERE, null, ex);
+        public ThreadReceiveTCP(String name){
+        }
+         
+    public void run(){
+        Socket socket;
+        try {
+            socket = new Socket("192.168.2.5",45001);
+            System.out.println("port ou jessaye d'envoyer "+ 45001 );
+            
+             if(socket.isConnected()){   //Envoie des msgs
+            Main21 thread = new Main21(socket);
+            thread.start();
+            System.out.println("démarrage du thread d'envoie des msgs");
             }
-              
-          }
-      }  
+             
+            InputStreamReader stream = new InputStreamReader(socket.getInputStream());
+            BufferedReader reader = new BufferedReader(stream);
+             
+            //System.out.println("je vais lui rep ");
+           // System.out.println("je lui ai rep ");
+           // testMsg(socket);
+            
+           
+            
+            while(socket.isConnected()){  // Boucle de réception des msgs
+                String a = reader.readLine();
+               if (a != null ){
+                System.out.println("le client m'a envoyé : " + a ); 
+               }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
