@@ -53,6 +53,7 @@ public class User {
     public void startThreadTCP(String ip , int port){
         ThreadSendTCP threadSendTCP = new ThreadSendTCP("name",ip,port);
         threadSendTCP.start();
+        
     }
 
     public User getUser(){

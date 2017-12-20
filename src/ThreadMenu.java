@@ -1,4 +1,3 @@
-
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
 
@@ -28,6 +27,7 @@ public class ThreadMenu extends Thread {
                            
                            Main.user.startThreadTCP(info[0], parseInt(info[1],10));
                        break;
+                
                    
                }
         }

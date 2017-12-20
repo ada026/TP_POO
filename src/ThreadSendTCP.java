@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,35 +20,35 @@ public class ThreadSendTCP extends Thread {
      }
      
      public void run() {
+         
         Socket socket;
-
         try {
             socket = new Socket(ip,port);
             System.out.println("port ou jessaye d'envoyer "+ port );
             InputStreamReader stream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(stream);
             String message = reader.readLine();
-            System.out.println("le client m'a rep : " + message );
-            loopMsg(socket);
-            
+            System.out.println("le client m'a rep : " + message );  
+            System.out.println("je vais lui rep ");
+            testMsg(socket);
+            System.out.println("je lui ai rep ");
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-     } 
+        }
+        
+        
+        
+     }
      
-     public void loopMsg(Socket socket) throws IOException{
-         while(true){
-            InputStreamReader stream = new InputStreamReader(socket.getInputStream());
-            BufferedReader reader = new BufferedReader(stream);
-            String message;
-             try {
-                 message = reader.readLine();
-                 System.out.println(message);
-             } catch (IOException ex) {
-                 Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            
-         }
+     public void testMsg(Socket socket){
+         PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(socket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadSendTCP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                writer.println("Coucou ");
+                writer.close(); 
      }
      
      
