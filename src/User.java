@@ -41,15 +41,15 @@ public class User {
         ThreadMenu threadMenu = new ThreadMenu("thread menu");
         threadMenu.start();
         
-        ThreadReceiveTCP threadReceiveTCP = new ThreadReceiveTCP("receive tcp");
+        ThreadAcceptTCP threadReceiveTCP = new ThreadAcceptTCP("receive tcp");
         threadReceiveTCP.start();
-        
         
     }
     
     public void startThreadTCP(String ip , int port){
-        ThreadSendTCP threadSendTCP = new ThreadSendTCP("name",ip,port);
+        ThreadSendTCPFinal threadSendTCP = new ThreadSendTCPFinal("name",ip,port,null,true);
         threadSendTCP.start();
+        
         
     }
 

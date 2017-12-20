@@ -19,6 +19,8 @@ public class ThreadMenu extends Thread {
                 
                switch(choix){
                    case 1: System.out.println(Main.user.getListUser().toString());
+                                              choix = 9 ;
+
                        break;
                    case 2: System.out.println("A qui veux tu parler ? entre son pseudo ");
                            String pseudo = sc.next();
@@ -26,7 +28,9 @@ public class ThreadMenu extends Thread {
                            String[] info = Main.user.getListUser().get(pseudo).toString().split("-");
                            
                            Main.user.startThreadTCP(info[0], parseInt(info[1],10));
+                           choix = 9 ;
                        break;
+                   
                 
                    
                }

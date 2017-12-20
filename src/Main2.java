@@ -23,10 +23,12 @@ public class Main2 {
                 threadSendTCP = new Main21(client2Socket);
                 threadSendTCP.start();
             }
+            
             System.out.println("Connexion effective");   
             PrintWriter writer = new PrintWriter(client2Socket.getOutputStream());
             i++;
             Scanner sc = new Scanner(System.in);
+            
             while(!client2Socket.isClosed()) {
 	            String msg = sc.next();
 	            
