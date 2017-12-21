@@ -1,13 +1,15 @@
+package SourcePackage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Main21 extends Thread {
+public class ThreadReceiveTCPFinal extends Thread {
 
 	private Socket socket;
 	
-	public Main21(Socket socket) {
+	public ThreadReceiveTCPFinal(Socket socket) {
 		this.socket = socket;
 	}
 	
@@ -18,6 +20,8 @@ public class Main21 extends Thread {
 	        BufferedReader reader = new BufferedReader(stream);
 	        System.out.println("Je vais lire1");
 	        while(socket.isConnected()) {
+                    	        System.out.println("Je lis ");
+
 	        		String a = reader.readLine();
 	        		if(a != null)
 	        			System.out.println(a);

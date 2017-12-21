@@ -1,3 +1,5 @@
+package SourcePackage;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ public class User {
         
         try {
             this.socketEnvoi = new DatagramSocket();
-
             this.socketEcoute = new DatagramSocket(45047);
         }
         catch (SocketException e) {

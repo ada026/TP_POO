@@ -1,3 +1,5 @@
+package SourcePackage;
+
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
 
@@ -5,7 +7,6 @@ public class ThreadMenu extends Thread {
         
         public ThreadMenu(String name){
             super(name);
-
         }
 
         public void run(){

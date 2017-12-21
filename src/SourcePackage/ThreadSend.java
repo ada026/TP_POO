@@ -1,3 +1,5 @@
+package SourcePackage;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -25,12 +27,7 @@ public class ThreadSend extends Thread{
         User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
-                data.getBytes().length, address, 45047);
-        //DatagramPacket packet2 = new DatagramPacket(data.getBytes(),
-        // data.getBytes().length, address, 45048);
-
-        // System.out.println("J'ai envoyé mon paquet en broadcast");
-
+        data.getBytes().length, address, 45047);
         User.getSocketEnvoi().send(packet);
     }
 

@@ -1,3 +1,5 @@
+package SourcePackage;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -17,10 +19,8 @@ public class ThreadReceive extends Thread {
             }
         }
 
-    public static void receiveMessage() throws IOException {
-
+    public static void receiveMessage() throws IOException {   //UDP : boucle qui recoit les messages udp broadcast pour voir qui est en ligne
         while(true){
-
            // System.out.println("Jattends de recevoir un message <<< bloqué" + "temps : " + System.currentTimeMillis());
 
             byte[] recvBuf = new byte[1024];
@@ -40,24 +40,33 @@ public class ThreadReceive extends Thread {
           //  System.out.println("pseudo recu : "  + recvStr);
 
             if( !Main.user.belongList(recvStr)){
-            SendMessage.sendMessage(addr, port);
+            sendMessage(addr, port);
             ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
             }
             
             else{
          //           System.out.println(recvStr + "est deja dans la liste >>>>>>>>>>> ");
             }
-            
+        }
+    }
+    
+    public static void sendMessage (InetAddress address, int port) throws IOException {    // Pour faire la réponse
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
+        //String data = user.getPseudo();
+        String data = Main.user.getPseudo();
+        DatagramPacket packet = new DatagramPacket(data.getBytes(),
+                data.getBytes().length, address, 45047);
+        //System.out.println("J'ai renvoyé mon paquet apres l'ecoute sur le port : " + 45047);
+        User.getSocketEcoute().send(packet);
     }
     
     public synchronized static void ajoutUserListe(String pseudo, String ip){
-            
             Main.user.setListUser(pseudo,ip);
-            
-          //  System.out.println(user.getListUser().toString());
-
     }
 
 
