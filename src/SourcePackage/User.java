@@ -8,18 +8,23 @@ import java.util.Date;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class User {
     private String pseudo;
     private static DatagramSocket socketEnvoi;
     private static DatagramSocket socketEcoute;
     private static boolean firstMsg = false;
+    private HashMap<Integer,Socket> listSocket;
+
     
     private HashMap<String, String> listUser ;
 
     public User(String pseudo){
         listUser = new HashMap<>();
-        
+        listSocket = new HashMap();
+
         try {
             this.socketEnvoi = new DatagramSocket();
             this.socketEcoute = new DatagramSocket(45047);
@@ -48,9 +53,16 @@ public class User {
     }
     
     public void startThreadTCP(String ip , int port){
-        ThreadSendTCPFinal threadSendTCP = new ThreadSendTCPFinal("name",ip,port,null,true);
-        threadSendTCP.start();
+       
         
+        try {
+            listSocket.put(port, new Socket(ip,port));
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ThreadSendTCPFinal threadSendTCP = new ThreadSendTCPFinal("name",listSocket.get(port),true);
+        threadSendTCP.start();
         
     }
 

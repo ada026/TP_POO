@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,19 +20,17 @@ public class ThreadSendTCPFinal extends Thread {
     PrintWriter writer = null;
     ThreadReceiveTCPFinal threadReceive;
     
-    public ThreadSendTCPFinal(String name,String ip, int port, Socket socket1,boolean lancementOuPas){
+    public ThreadSendTCPFinal(String name, Socket socket1,boolean lancementOuPas){
         super(name);
         socket = socket1;
         this.lancementOuPas = lancementOuPas;
-        this.ip = ip;
-        this.port = port;
     }
     
     @Override
     public void run(){
         try {
-            if(lancementOuPas) 
-            		socketReceiveIniationThread();
+            if(lancementOuPas)
+            		socketReceiveIniationThread(socket);
             
             System.out.println("Possibilité d'envoyer des msgs ");
 
@@ -62,8 +61,7 @@ public class ThreadSendTCPFinal extends Thread {
 
      }
     
-    private void socketReceiveIniationThread() throws UnknownHostException, IOException {
-		socket = new Socket(ip,port);
+    private void socketReceiveIniationThread(Socket socket) throws UnknownHostException, IOException {
 		threadReceive = new ThreadReceiveTCPFinal(socket);
 		threadReceive.start();
     }

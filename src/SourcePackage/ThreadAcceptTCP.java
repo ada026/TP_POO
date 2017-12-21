@@ -32,11 +32,12 @@ public class ThreadAcceptTCP extends Thread{
 		Socket client2Socket = null;
 		try {
 		    System.out.println("port ou jessaye d'ecouter : " + client1Socket.getLocalPort());
-                    
+                    while(true){
 		    if(!client1Socket.isClosed()) {
 		        client2Socket = client1Socket.accept();
                         listSocket.put(client2Socket.getPort(), client2Socket);   // dans l'hash map des socket on va rajouter un socket du client qui se connecte
                         listThreadToSocket.put(client2Socket, new SetThreadCommunication(client2Socket));   //liste des threads
+                    }
                     }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
