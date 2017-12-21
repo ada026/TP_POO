@@ -20,8 +20,6 @@ public class ThreadReceiveTCPFinal extends Thread {
 	        BufferedReader reader = new BufferedReader(stream);
 	        System.out.println("Je vais lire1");
 	        while(socket.isConnected()) {
-                    	        System.out.println("Je lis ");
-
 	        		String a = reader.readLine();
 	        		if(a != null)
 	        			System.out.println(a);
