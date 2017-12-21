@@ -10,6 +10,7 @@ public class ThreadMenu extends Thread {
         }
 
         public void run(){
+            int i = 0;
             
         System.out.println("MENU : \n 1 : Voir liste des utilisateurs présents \n 2 : Initialiser communication (TCP) \n 9 : Quitter");
         int choix = 0;
@@ -18,9 +19,14 @@ public class ThreadMenu extends Thread {
                 Scanner sc = new Scanner(System.in);
                 choix = sc.nextInt();
                 
+                
                switch(choix){
                    case 1: System.out.println(Main.user.getListUser().toString());
+                                                                 i++;
+
+                                          if( i == 2) {
                                               choix = 9 ;
+                                          }
 
                        break;
                    case 2: System.out.println("A qui veux tu parler ? entre son pseudo ");
@@ -29,7 +35,10 @@ public class ThreadMenu extends Thread {
                            String[] info = Main.user.getListUser().get(pseudo).toString().split("-");
                            
                            Main.user.startThreadTCP(info[0], parseInt(info[1],10));
-                           choix = 9 ;
+                           i++;
+                            if( i == 2) {
+                                              choix = 9 ;
+                                          }
                        break;
                    
                 

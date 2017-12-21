@@ -10,6 +10,8 @@ public class SetThreadCommunication {
        threadReceiveTCP = new ThreadReceiveTCPFinal(client2Socket);
        threadSendTCP = new ThreadSendTCPFinal("Send",client2Socket,false);
        
+       threadReceiveTCP.start();
+       threadSendTCP.start();
+       
     }
-
 }

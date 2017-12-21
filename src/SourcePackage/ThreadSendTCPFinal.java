@@ -29,8 +29,10 @@ public class ThreadSendTCPFinal extends Thread {
     @Override
     public void run(){
         try {
-            if(lancementOuPas)
+            if(lancementOuPas){
+                       System.out.println(" je vais envoyer pr me co>>>>>>>>>");
             		socketReceiveIniationThread(socket);
+            }
             
             System.out.println("Possibilité d'envoyer des msgs ");
 
@@ -58,10 +60,10 @@ public class ThreadSendTCPFinal extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(ThreadSendTCPFinal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
      }
     
     private void socketReceiveIniationThread(Socket socket) throws UnknownHostException, IOException {
+            System.out.println("Avant de debuter mon thread de receive mon socket est : " + socket.isConnected());
 		threadReceive = new ThreadReceiveTCPFinal(socket);
 		threadReceive.start();
     }

@@ -34,7 +34,10 @@ public class ThreadAcceptTCP extends Thread{
 		    System.out.println("port ou jessaye d'ecouter : " + client1Socket.getLocalPort());
                     while(true){
 		    if(!client1Socket.isClosed()) {
+                        System.out.println("Une connexion en attente ... ");
 		        client2Socket = client1Socket.accept();
+                        System.out.println("connexion effectuée ");
+                        Main.openFich();
                         listSocket.put(client2Socket.getPort(), client2Socket);   // dans l'hash map des socket on va rajouter un socket du client qui se connecte
                         listThreadToSocket.put(client2Socket, new SetThreadCommunication(client2Socket));   //liste des threads
                     }
@@ -44,7 +47,4 @@ public class ThreadAcceptTCP extends Thread{
 			e.printStackTrace();
 		}
 	}
-        
-        
-	
 }

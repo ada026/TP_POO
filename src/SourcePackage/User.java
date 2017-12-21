@@ -1,5 +1,6 @@
 package SourcePackage;
 
+import GraphiquePackage.FichCom;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -17,11 +18,12 @@ public class User {
     private static DatagramSocket socketEcoute;
     private static boolean firstMsg = false;
     private HashMap<Integer,Socket> listSocket;
-
+    private ArrayList<FichCom> listFichCom;
     
     private HashMap<String, String> listUser ;
 
     public User(String pseudo){
+        listFichCom = new ArrayList<>();
         listUser = new HashMap<>();
         listSocket = new HashMap();
 
@@ -44,8 +46,8 @@ public class User {
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
         
-        ThreadMenu threadMenu = new ThreadMenu("thread menu");
-        threadMenu.start();
+       // ThreadMenu threadMenu = new ThreadMenu("thread menu");
+        // threadMenu.start();
         
         ThreadAcceptTCP threadReceiveTCP = new ThreadAcceptTCP("receive tcp");
         threadReceiveTCP.start();
@@ -53,7 +55,7 @@ public class User {
     }
     
     public void startThreadTCP(String ip , int port){
-       
+       System.out.println("DEMARRAGE THREAD");
         
         try {
             listSocket.put(port, new Socket(ip,port));
@@ -61,6 +63,7 @@ public class User {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+
         ThreadSendTCPFinal threadSendTCP = new ThreadSendTCPFinal("name",listSocket.get(port),true);
         threadSendTCP.start();
         
@@ -107,6 +110,14 @@ public class User {
     
     public int getPort(){
         return socketEnvoi.getLocalPort();
+    }
+    
+    public void addFichCom(FichCom fichCom){
+        this.listFichCom.add(fichCom);
+    }
+    
+    public FichCom getFichCom(int i){
+        return listFichCom.get(i);
     }
     
 }
