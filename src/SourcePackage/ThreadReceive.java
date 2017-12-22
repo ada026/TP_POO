@@ -43,6 +43,10 @@ public class ThreadReceive extends Thread {
                   Main.user.removeUserList(info[1]);//mettre a jour sa liste : l'enlever
             }
             
+            else if(recvStr.contains("quito")){
+                Main.user.removeSocketList(recvPacket.getPort());
+            }
+            
             else {
             if( !Main.user.belongList(recvStr)){
                 InetAddress addr = recvPacket.getAddress();

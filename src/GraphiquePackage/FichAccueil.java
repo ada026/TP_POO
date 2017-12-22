@@ -23,21 +23,12 @@ public class FichAccueil extends javax.swing.JFrame {
     
     public FichAccueil() {
         
-       exitSystem();
+
        initComponents();
 
     }
 
-    public void exitSystem(){
-         this.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                    Main.user.sendMessageUDP("quita");
-                    System.exit(0);
-                    }
-                });
-    }
-    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

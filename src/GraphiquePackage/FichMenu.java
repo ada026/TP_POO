@@ -32,7 +32,20 @@ public class FichMenu extends javax.swing.JDialog {
         ThreadPrintListUser threadPrint = new ThreadPrintListUser("thread print");
         threadPrint.start();
         
+        exitSystem();
     }
+    
+     public void exitSystem(){
+         this.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                    Main.user.sendMessageUDP("quita");
+                    System.out.println("jai send le msg" );
+                    System.exit(0);
+                    }
+                });
+    }
+    
 
     public static void setListUser(String liste){
         listUser.setText(liste);
