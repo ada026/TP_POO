@@ -17,7 +17,7 @@ public class FichCom extends javax.swing.JDialog {
      * Creates new form FichCom
      */
     
-    private int portDest;
+    private static int portDest;
     
     public FichCom(java.awt.Dialog parent, boolean modal, int port ) {
         super(parent, modal);
@@ -28,9 +28,6 @@ public class FichCom extends javax.swing.JDialog {
 
     }
     
-    public int getPortDest(){
-        return portDest;
-    }
     
      public void exitSystem(){
          this.addWindowListener(new java.awt.event.WindowAdapter() {

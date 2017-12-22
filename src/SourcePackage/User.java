@@ -20,12 +20,29 @@ public class User {
     private static DatagramSocket socketEcoute;
     private static boolean firstMsg = false;
     private HashMap<Integer,Socket> listSocket;
-    private HashMap<Integer , FichCom> listFichCom;
+    private ArrayList<FichCom> listFichCom;
     private PrintWriter writer = null;
     private HashMap<String, String> listUser ;
 
-    public User(String pseudo){
-        listFichCom = new HashMap<>();
+    public User(int i) {
+    		this.pseudo = String.valueOf(pseudo);
+    		try {
+
+    	        listFichCom = new ArrayList<>();
+    	        listUser = new HashMap<>();
+    	        listSocket = new HashMap();
+				this.socketEnvoi = new DatagramSocket();
+
+	            this.socketEcoute = new DatagramSocket(45047);
+			} catch (SocketException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    }
+    
+    public User(){
+        this.pseudo = "quiti";
+        listFichCom = new ArrayList<>();
         listUser = new HashMap<>();
         listSocket = new HashMap();
 
@@ -36,18 +53,12 @@ public class User {
         catch (SocketException e) {
             e.printStackTrace();
         }
-        this.pseudo = pseudo;
         
+        System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
     }
     
-    public void startThread(String s){
-        if (s.equals("first")){
-            sendMessageUDP(s,0);
-        }
-        else{
-            sendMessageUDP(null,0);
-
-        }
+    public void startThread(){
+        sendMessageUDP(null,0);
         
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
@@ -57,23 +68,21 @@ public class User {
         
     }
     
-    public void startThread(int i){
-        
-    }
-    
     public void sendMessageUDP(String message,int port){
         String data = "" ;
-        if(message.equals("first"))
-           data = message;
-        else if(message != null){
+        
+        if(message != null && message.equals("quiti"))
+        		data = message;
+        else if(message != null ){
             data = message+"-"+pseudo;
             listSocket.remove(port);
         }
         else {
-           data = Main.user.getPseudo();
+            data = Main.user.getPseudo();
         }
         
-        System.out.println(data + " gr");
+        
+        System.out.println(Main.user);
         try {
         User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
@@ -140,8 +149,7 @@ public class User {
         return this.pseudo;
     }
 
-    public void setPseudo(String pseudo){  //mon pseudo a changé donc je vais renvoyer en broadcast mon pseudo
-        sendMessageUDP(pseudo,0);
+    public void setPseudo(String pseudo){
         this.pseudo = pseudo;
     }
     @Override
@@ -162,6 +170,7 @@ public class User {
     }
     
     public void setListUser(String pseudo, String ipPort){
+        System.out.println("PSEUUUUDO : "+ pseudo +" \n IPPORTTT ::: " + ipPort);
         this.listUser.put(pseudo, ipPort);
     }
     
@@ -191,11 +200,10 @@ public class User {
         return socketEnvoi.getLocalPort();
     }
     
-    public void addFichCom(int port ,FichCom fichCom){
-        this.listFichCom.put(port, fichCom);
+    public void addFichCom(FichCom fichCom){
+        this.listFichCom.add(fichCom);
     }
     
-   
     public FichCom getFichCom(int i){
         return listFichCom.get(i);
     }

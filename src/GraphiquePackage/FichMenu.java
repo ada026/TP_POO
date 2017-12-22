@@ -168,7 +168,7 @@ public class FichMenu extends javax.swing.JDialog {
         Main.user.sendMessageTCP("je me co",info[0],parseInt(info[1]), true);
         fichCom = new FichCom(this,false,parseInt(info[1]));
         this.fichCom.setVisible(true);
-        Main.user.addFichCom(parseInt(info[1]),fichCom);
+        Main.user.addFichCom(fichCom);
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -181,7 +181,7 @@ public class FichMenu extends javax.swing.JDialog {
     public void openWindow(int port){
         fichCom = new FichCom(this,false,port);
         this.fichCom.setVisible(true);
-        Main.user.addFichCom(port, fichCom);
+        Main.user.addFichCom(fichCom);
     }
     /**
      * @param args the command line arguments
