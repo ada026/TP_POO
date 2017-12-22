@@ -44,6 +44,7 @@ public class ThreadReceive extends Thread {
             }
             
             else if(recvStr.contains("quito")){
+                System.out.print("etat du socket : "+ User.getSocketEcoute());
                 Main.user.removeSocketList(recvPacket.getPort());
             }
             

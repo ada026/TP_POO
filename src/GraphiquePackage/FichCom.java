@@ -33,7 +33,7 @@ public class FichCom extends javax.swing.JDialog {
          this.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                    Main.user.sendMessageUDP("quito");
+                    Main.user.sendMessageUDP("quito",portDest);
                     System.out.println("jai send le msg" );
                     System.exit(0);
                     }

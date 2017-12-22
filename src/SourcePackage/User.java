@@ -42,7 +42,7 @@ public class User {
     }
     
     public void startThread(){
-        sendMessageUDP(null);
+        sendMessageUDP(null,0);
         
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
@@ -52,11 +52,12 @@ public class User {
         
     }
     
-    public void sendMessageUDP(String message){
+    public void sendMessageUDP(String message,int port){
         String data = "" ;
         
         if(message != null ){
             data = message+"-"+pseudo;
+            listSocket.remove(port);
         }
         else {
             data = Main.user.getPseudo();
@@ -160,15 +161,11 @@ public class User {
     
     public void removeSocketList(int port){
         System.out.println("J'ai fermé la co !!! ");
-        System.out.println("Etat du socket avant :  "+  listSocket.get(port).isConnected());
-
         try {
             listSocket.get(port).close();
         } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
-                System.out.println("Etat du socket apres :  "+  listSocket.get(port).isConnected());
-
         this.listSocket.remove(port);
     }
     

@@ -39,7 +39,7 @@ public class FichMenu extends javax.swing.JDialog {
          this.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                    Main.user.sendMessageUDP("quita");
+                    Main.user.sendMessageUDP("quita",0);
                     System.out.println("jai send le msg" );
                     System.exit(0);
                     }
