@@ -21,10 +21,7 @@ public class FichAccueil extends javax.swing.JFrame {
     
     
     public FichAccueil() {
-        
-
        initComponents();
-
     }
 
    
