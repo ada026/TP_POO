@@ -150,12 +150,12 @@ public class FichMenu extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        fichCom = new FichCom(this,false,0);
+        
+        String[] info = Main.user.getListUser().get(pseudoEntry.getText()).toString().split("-");
+        Main.user.sendMessageTCP("je me co",info[0],parseInt(info[1]), true);
+        fichCom = new FichCom(this,false,parseInt(info[1]));
         this.fichCom.setVisible(true);
         Main.user.addFichCom(fichCom);
-        String[] info = Main.user.getListUser().get(pseudoEntry.getText()).toString().split("-");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>"    + info[0]);
-        Main.user.sendMessageTCP("je me co",info[0],parseInt(info[1]), true);
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -231,4 +231,8 @@ public class FichMenu extends javax.swing.JDialog {
     private static javax.swing.JLabel listUser;
     private javax.swing.JTextField pseudoEntry;
     // End of variables declaration//GEN-END:variables
+
+    private int ParseInt(String info) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

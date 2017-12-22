@@ -1,6 +1,7 @@
 package SourcePackage;
 
 import GraphiquePackage.FichCom;
+import static SourcePackage.Main.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.*;
@@ -41,8 +42,7 @@ public class User {
     }
     
     public void startThread(){
-        Thread threadSend = new ThreadSend("thread send");
-        threadSend.start();
+        sendMessageUDP(null);
         
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
@@ -51,6 +51,31 @@ public class User {
         threadReceiveTCP.start();
         
     }
+    
+    public void sendMessageUDP(String message){
+        String data = "" ;
+        
+        if(message != null ){
+            data = message+"-"+pseudo;
+        }
+        else {
+            data = Main.user.getPseudo();
+        }
+        
+        System.out.println(Main.user);
+        try {
+        User.getSocketEnvoi().setBroadcast(true);
+        InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
+        DatagramPacket packet = new DatagramPacket(data.getBytes(),
+        data.getBytes().length, address, 45047);
+        
+            User.getSocketEnvoi().send(packet);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     
     
     public void sendMessageTCP(String msg,String ip, int port ,boolean lancementOuPas ){
@@ -63,6 +88,7 @@ public class User {
         
               if(lancementOuPas){
                   socket = new Socket(ip, port);
+                  listSocket.put(port, socket);
                        System.out.println(" je vais envoyer pr me co>>>>>>>>>");
             		socketReceiveIniationThread(socket);
             }
@@ -125,6 +151,10 @@ public class User {
     
     public void setListUser(String pseudo, String ipPort){
         this.listUser.put(pseudo, ipPort);
+    }
+    
+    public void removeUserList(String pseudo1){
+        this.listUser.remove(pseudo1);
     }
     
     public boolean belongList(String pseudo){

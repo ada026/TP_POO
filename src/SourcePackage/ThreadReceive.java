@@ -34,19 +34,24 @@ public class ThreadReceive extends Thread {
             // System.out.println("Jai recu le message >>> non bloqué ");
 
             String recvStr = new String(recvPacket.getData(), 0, recvPacket.getLength());
-            InetAddress addr = recvPacket.getAddress();
-            int port = recvPacket.getPort();
+            
             //System.out.println("nouveau client : " + recvStr + "\n voici son adresse IP : " + addr + " et voici son port : " + port);
           //  System.out.println("pseudo recu : "  + recvStr);
 
+            if(recvStr.contains("quita")){
+                String[] info = recvStr.split("-");
+                  Main.user.removeUserList(info[1]);//mettre a jour sa liste : l'enlever
+            }
+            
+            else {
             if( !Main.user.belongList(recvStr)){
+                InetAddress addr = recvPacket.getAddress();
+            int port = recvPacket.getPort();
             sendMessage(addr, port);
             ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
             }
-            
-            else{
-         //           System.out.println(recvStr + "est deja dans la liste >>>>>>>>>>> ");
             }
+          
         }
     }
     

@@ -7,6 +7,8 @@ package GraphiquePackage;
 
 import SourcePackage.Main;
 import SourcePackage.User;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -21,10 +23,21 @@ public class FichAccueil extends javax.swing.JFrame {
     
     public FichAccueil() {
         
-        initComponents();
+       exitSystem();
+       initComponents();
 
     }
 
+    public void exitSystem(){
+         this.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                    Main.user.sendMessageUDP("quita");
+                    System.exit(0);
+                    }
+                });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,6 +115,8 @@ public class FichAccueil extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jButton1ActionPerformed
 
+        
+    
     /**
      * @param args the command line arguments
      */
