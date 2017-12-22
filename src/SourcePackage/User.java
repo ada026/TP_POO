@@ -20,12 +20,12 @@ public class User {
     private static DatagramSocket socketEcoute;
     private static boolean firstMsg = false;
     private HashMap<Integer,Socket> listSocket;
-    private ArrayList<FichCom> listFichCom;
+    private HashMap<Integer , FichCom> listFichCom;
     private PrintWriter writer = null;
     private HashMap<String, String> listUser ;
 
     public User(String pseudo){
-        listFichCom = new ArrayList<>();
+        listFichCom = new HashMap<>();
         listUser = new HashMap<>();
         listSocket = new HashMap();
 
@@ -49,6 +49,10 @@ public class User {
         
         ThreadAcceptTCP threadReceiveTCP = new ThreadAcceptTCP("receive tcp");
         threadReceiveTCP.start();
+        
+    }
+    
+    public void startThread(int i){
         
     }
     
@@ -180,10 +184,11 @@ public class User {
         return socketEnvoi.getLocalPort();
     }
     
-    public void addFichCom(FichCom fichCom){
-        this.listFichCom.add(fichCom);
+    public void addFichCom(int port ,FichCom fichCom){
+        this.listFichCom.put(port, fichCom);
     }
     
+   
     public FichCom getFichCom(int i){
         return listFichCom.get(i);
     }

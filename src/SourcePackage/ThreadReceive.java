@@ -38,6 +38,8 @@ public class ThreadReceive extends Thread {
             //System.out.println("nouveau client : " + recvStr + "\n voici son adresse IP : " + addr + " et voici son port : " + port);
           //  System.out.println("pseudo recu : "  + recvStr);
 
+            
+           
             if(recvStr.contains("quita")){
                 String[] info = recvStr.split("-");
                   Main.user.removeUserList(info[1]);//mettre a jour sa liste : l'enlever
@@ -50,13 +52,18 @@ public class ThreadReceive extends Thread {
             
             else {
             if( !Main.user.belongList(recvStr)){
+                 if(recvStr.equals("")){
+                
+            }
+                 else{
+            
                 InetAddress addr = recvPacket.getAddress();
             int port = recvPacket.getPort();
             sendMessage(addr, port);
             ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
+                 }
             }
             }
-          
         }
     }
     

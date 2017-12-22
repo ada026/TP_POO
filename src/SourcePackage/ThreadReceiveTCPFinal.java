@@ -32,7 +32,8 @@ public class ThreadReceiveTCPFinal extends Thread {
                                     if(a.equals("quita")){
                                         socket.close();
                                     }
-                                    Main.user.getFichCom(0).setListMsg(a);
+                                    
+                                    Main.user.getFichCom(socket.getPort()).setListMsg(a);
                                 }
 	        }
 		} catch (IOException e) {

@@ -9,11 +9,10 @@ import SourcePackage.Main;
 import SourcePackage.User;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author elyes
- */
 public class FichAccueil extends javax.swing.JFrame {
 
     /**     * Creates new form FichMenu
@@ -96,13 +95,31 @@ public class FichAccueil extends javax.swing.JFrame {
     }//GEN-LAST:event_PseudoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           String a = Pseudo.getText();
-           Main.launchUser(a);
+           
+        try {
+            
+            Main.launchUser("");
+            
+            String a = Pseudo.getText();
+            System.out.println("Checking pseudo ...");
+            
+            sleep(3000);
+            
+            if(Main.user.getListUser().containsKey(a)){
+                System.out.println("pseudo deja utilisé !! , réessayez ! ");
+            }
+            
+            else{
+            Main.user.setPseudo(a);
             menu = new FichMenu(this, false);
             this.setVisible(false);
             menu.setVisible(true);
             
-            Main.setFichMenu(menu);
+            Main.setFichMenu(menu); 
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FichAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
             
     }//GEN-LAST:event_jButton1ActionPerformed
 
