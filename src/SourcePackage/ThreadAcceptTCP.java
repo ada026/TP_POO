@@ -9,14 +9,13 @@ import java.util.logging.Logger;
 
 public class ThreadAcceptTCP extends Thread{
 	
-        private HashMap<Socket, SetThreadCommunication> listThreadToSocket;
+        private ThreadReceiveTCPFinal threadReceiveTCP;
         
         private ServerSocket client1Socket ;
-
+        
         
 	public ThreadAcceptTCP(String name) {
             super(name);
-            listThreadToSocket = new HashMap<>();
             try {
                 client1Socket = new ServerSocket(Main.user.getPort());
             } catch (IOException ex) {
@@ -37,7 +36,9 @@ public class ThreadAcceptTCP extends Thread{
                         System.out.println("port : " + client2Socket.getPort());
                         
                         Main.user.putListSocket(client2Socket);   // dans l'hash map des socket on va rajouter un socket du client qui se connecte
-                        listThreadToSocket.put(client2Socket, new SetThreadCommunication(client2Socket));   //liste des threads
+                        
+                        threadReceiveTCP = new ThreadReceiveTCPFinal(client2Socket);
+                        threadReceiveTCP.start();
                     }
                     }
 		} catch (IOException e) {
