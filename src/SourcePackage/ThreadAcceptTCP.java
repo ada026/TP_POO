@@ -9,9 +9,6 @@ import java.util.logging.Logger;
 
 public class ThreadAcceptTCP extends Thread{
 	
-	private ThreadReceiveTCPFinal threadReceiveTCP = null;
-	private ThreadSendTCPFinal threadSendTCP = null;
-        private HashMap<Integer, Socket> listSocket;
         private HashMap<Socket, SetThreadCommunication> listThreadToSocket;
         
         private ServerSocket client1Socket ;
@@ -19,7 +16,6 @@ public class ThreadAcceptTCP extends Thread{
         
 	public ThreadAcceptTCP(String name) {
             super(name);
-            listSocket = new HashMap<>();          
             listThreadToSocket = new HashMap<>();
             try {
                 client1Socket = new ServerSocket(Main.user.getPort());
@@ -37,8 +33,10 @@ public class ThreadAcceptTCP extends Thread{
                         System.out.println("Une connexion en attente ... ");
 		        client2Socket = client1Socket.accept();
                         System.out.println("connexion effectuée ");
-                        Main.openFich();
-                        listSocket.put(client2Socket.getPort(), client2Socket);   // dans l'hash map des socket on va rajouter un socket du client qui se connecte
+                        Main.openFich(client2Socket.getPort());
+                        System.out.println("port : " + client2Socket.getPort());
+                        
+                        Main.user.putListSocket(client2Socket);   // dans l'hash map des socket on va rajouter un socket du client qui se connecte
                         listThreadToSocket.put(client2Socket, new SetThreadCommunication(client2Socket));   //liste des threads
                     }
                     }

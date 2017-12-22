@@ -2,6 +2,7 @@ package SourcePackage;
 
 import GraphiquePackage.FichAccueil;
 import GraphiquePackage.FichMenu;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -26,11 +27,15 @@ public class Main {
         fichMenu = fichMenu1;
     }
     
-    public static void openFich(){
-        fichMenu.openWindow();
+    public static void openFich(int port){
+        fichMenu.openWindow(port);
     }  
     
-    public User getUser(){
+    public static User getUser(){
         return user;
+    }
+    
+    public static HashMap getUserList(){
+        return user.getListUser();
     }
 }

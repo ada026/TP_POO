@@ -6,6 +6,8 @@
 package GraphiquePackage;
 
 import SourcePackage.Main;
+import static java.lang.Integer.parseInt;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -20,13 +22,21 @@ public class FichMenu extends javax.swing.JDialog {
      */
     
     FichCom fichCom;
+
    
     public FichMenu(FichAccueil parent, boolean modal) {
         super(parent, modal);
         initComponents();
         MonPseudo.setText(parent.getPseudo());
+        
+        ThreadPrintListUser threadPrint = new ThreadPrintListUser("thread print");
+        threadPrint.start();
+        
     }
 
+    public static void setListUser(String liste){
+        listUser.setText(liste);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +52,7 @@ public class FichMenu extends javax.swing.JDialog {
         MonPseudo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        pseudoEntry = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -68,10 +78,10 @@ public class FichMenu extends javax.swing.JDialog {
             }
         });
 
-        jTextField1.setText("A qui parler ? entrer pseudo");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        pseudoEntry.setText("A qui parler ? entrer pseudo");
+        pseudoEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                pseudoEntryActionPerformed(evt);
             }
         });
 
@@ -79,6 +89,21 @@ public class FichMenu extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(MonPseudo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 670, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(listUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(37, 37, 37)))
+                .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,22 +111,8 @@ public class FichMenu extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(MonPseudo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 658, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(listUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addGap(37, 37, 37)))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pseudoEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
@@ -116,12 +127,13 @@ public class FichMenu extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(listUser, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pseudoEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButton2))
+                    .addComponent(listUser, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,25 +144,40 @@ public class FichMenu extends javax.swing.JDialog {
                     listUser.setText(Main.user.getListUser().toString());
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void pseudoEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pseudoEntryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_pseudoEntryActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        fichCom = new FichCom(this,false);
+        
+        fichCom = new FichCom(this,false,0);
         this.fichCom.setVisible(true);
         Main.user.addFichCom(fichCom);
+        String[] info = Main.user.getListUser().get(pseudoEntry.getText()).toString().split("-");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>"    + info[0]);
+        Main.user.sendMessageTCP("je me co",info[0],parseInt(info[1]), true);
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
     
-    public void openWindow(){
-        fichCom = new FichCom(this,false);
+    public void majButton(String name){
+        JButton button = new JButton(name);
+        button.setVisible(true);
+    }
+    
+    public void openWindow(int port){
+        fichCom = new FichCom(this,false,port);
         this.fichCom.setVisible(true);
         Main.user.addFichCom(fichCom);
     }
     /**
      * @param args the command line arguments
      */
+    
+    public String getPseudo(){
+        return ((FichAccueil)this.getParent()).getPseudo();
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -201,7 +228,7 @@ public class FichMenu extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
     private static javax.swing.JLabel listUser;
+    private javax.swing.JTextField pseudoEntry;
     // End of variables declaration//GEN-END:variables
 }

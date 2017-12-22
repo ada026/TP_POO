@@ -2,6 +2,7 @@ package SourcePackage;
 
 import GraphiquePackage.FichCom;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class User {
     private static boolean firstMsg = false;
     private HashMap<Integer,Socket> listSocket;
     private ArrayList<FichCom> listFichCom;
-    
+    private PrintWriter writer = null;
     private HashMap<String, String> listUser ;
 
     public User(String pseudo){
@@ -46,28 +47,53 @@ public class User {
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
         
-       // ThreadMenu threadMenu = new ThreadMenu("thread menu");
-        // threadMenu.start();
-        
         ThreadAcceptTCP threadReceiveTCP = new ThreadAcceptTCP("receive tcp");
         threadReceiveTCP.start();
         
     }
     
-    public void startThreadTCP(String ip , int port){
-       System.out.println("DEMARRAGE THREAD");
-        
+    
+    public void sendMessageTCP(String msg,String ip, int port ,boolean lancementOuPas ){
+
         try {
-            listSocket.put(port, new Socket(ip,port));
+        /* listSocket.put(port, new Socket(ip,port));
+        Socket socket = listSocket.get(port); */
+            System.out.println("port : " + port );
+        Socket socket = listSocket.get(port);
+        
+              if(lancementOuPas){
+                  socket = new Socket(ip, port);
+                       System.out.println(" je vais envoyer pr me co>>>>>>>>>");
+            		socketReceiveIniationThread(socket);
+            }
+
+        writer = new PrintWriter(socket.getOutputStream());
+
+            /*while(socket.isConnected()){
+                
+                if (msg.equals("quit")){
+                    socket.close();
+                    writer.close();
+                    System.out.println("il est parti");
+                    return ;
+                }
+            }*/
+            
+            
+                writer.print(msg  + "\n");
+                writer.flush();
         } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
-        ThreadSendTCPFinal threadSendTCP = new ThreadSendTCPFinal("name",listSocket.get(port),true);
-        threadSendTCP.start();
-        
     }
+    
+    
+     private void socketReceiveIniationThread(Socket socket) throws UnknownHostException, IOException {
+            System.out.println("Avant de debuter mon thread de receive mon socket est : " + socket.isConnected());
+		ThreadReceiveTCPFinal threadReceive = new ThreadReceiveTCPFinal(socket);
+		threadReceive.start();
+    }
+    
 
     public User getUser(){
         return this;
@@ -119,5 +145,11 @@ public class User {
     public FichCom getFichCom(int i){
         return listFichCom.get(i);
     }
+    
+    public void putListSocket(Socket socket){
+        listSocket.put(socket.getPort(), socket);
+    }
+    
+
     
 }
