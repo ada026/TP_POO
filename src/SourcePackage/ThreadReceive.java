@@ -49,19 +49,19 @@ public class ThreadReceive extends Thread {
                 System.out.print("etat du socket : "+ User.getSocketEcoute());
                 Main.user.removeSocketList(recvPacket.getPort());
             }
+            else  if(recvStr.equals("first")){
+                System.out.println("lancement de l'appli");
+            }
             
             else {
             if( !Main.user.belongList(recvStr)){
-                 if(recvStr.equals("")){
-                
-            }
-                 else{
-            
-                InetAddress addr = recvPacket.getAddress();
+
+            InetAddress addr = recvPacket.getAddress();
             int port = recvPacket.getPort();
             sendMessage(addr, port);
+            System.out.println("je rentre");
             ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
-                 }
+                 
             }
             }
         }

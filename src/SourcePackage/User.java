@@ -38,11 +38,16 @@ public class User {
         }
         this.pseudo = pseudo;
         
-        System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
     }
     
-    public void startThread(){
-        sendMessageUDP(null,0);
+    public void startThread(String s){
+        if (s.equals("first")){
+            sendMessageUDP(s,0);
+        }
+        else{
+            sendMessageUDP(null,0);
+
+        }
         
         Thread threadReceive = new ThreadReceive("thread receive");
         threadReceive.start();
@@ -58,16 +63,17 @@ public class User {
     
     public void sendMessageUDP(String message,int port){
         String data = "" ;
-        
-        if(message != null ){
+        if(message.equals("first"))
+           data = message;
+        else if(message != null){
             data = message+"-"+pseudo;
             listSocket.remove(port);
         }
         else {
-            data = Main.user.getPseudo();
+           data = Main.user.getPseudo();
         }
         
-        System.out.println(Main.user);
+        System.out.println(data + " gr");
         try {
         User.getSocketEnvoi().setBroadcast(true);
         InetAddress address = InetAddress.getByName("255.255.255.255"); //mettre l'adresse de broadcast directement
@@ -134,7 +140,8 @@ public class User {
         return this.pseudo;
     }
 
-    public void setPseudo(String pseudo){
+    public void setPseudo(String pseudo){  //mon pseudo a changé donc je vais renvoyer en broadcast mon pseudo
+        sendMessageUDP(pseudo,0);
         this.pseudo = pseudo;
     }
     @Override

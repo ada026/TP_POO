@@ -97,12 +97,11 @@ public class FichAccueil extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
            
         try {
-            
-            Main.launchUser("");
+            Main.launchUser("first");
             
             String a = Pseudo.getText();
-            System.out.println("Checking pseudo ...");
             
+            System.out.println("Checking pseudo ...");
             sleep(3000);
             
             if(Main.user.getListUser().containsKey(a)){
@@ -111,6 +110,7 @@ public class FichAccueil extends javax.swing.JFrame {
             
             else{
             Main.user.setPseudo(a);
+            
             menu = new FichMenu(this, false);
             this.setVisible(false);
             menu.setVisible(true);

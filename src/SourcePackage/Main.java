@@ -18,7 +18,7 @@ public class Main {
     
     public static void launchUser(String pseudo){
         user = new User(pseudo);
-        user.startThread();
+        user.startThread(pseudo);
     }
     
     
