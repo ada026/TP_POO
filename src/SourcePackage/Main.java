@@ -11,16 +11,13 @@ public class Main {
     private static FichMenu fichMenu;
     
     public static void main(String[] args){
-    		user = new User();
-    		fichAccueil = new FichAccueil();
-    		fichAccueil.setVisible(true);
+    fichAccueil = new FichAccueil();
+    fichAccueil.setVisible(true);
 
     }
     
-    
-    
-    public static void launchUser(User user1){
-        user = user1;
+    public static void launchUser(String pseudo){
+        user = new User(pseudo);
         user.startThread();
     }
     

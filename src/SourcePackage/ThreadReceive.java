@@ -7,63 +7,19 @@ import java.util.HashMap;
 
 public class ThreadReceive extends Thread {
     
-	private User user;
-	private static String nama;
-	
         public ThreadReceive(String name){
             super(name);
-        }
-        
-        public ThreadReceive(String name, User usr){
-        		super(name);
-        		this.user = usr;
-        		this.nama = name;
         }
 
         public void run(){
             try {
-            		if(this.getName().equals("quiti"))
-            			receiveMessage2(user);
-                        else {
-                            receiveMessage();
-                        }
+                receiveMessage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        
-        public static void receiveMessage2(User user) throws IOException {   //UDP : boucle qui recoit les messages udp broadcast pour voir qui est en ligne
-            
-            System.out.println("THREAD COURANT ::::::     "+Thread.currentThread().toString());
-            
-            
-            while(Main.user.getPseudo().equals("quiti")){
-               // System.out.println("Jattends de recevoir un message <<< bloqué" + "temps : " + System.currentTimeMillis());
-
-                byte[] recvBuf = new byte[1024];
-                DatagramPacket recvPacket = new DatagramPacket(recvBuf, recvBuf.length);
-                try {
-                		System.out.println("wsh tu vas recevoir");
-                    user.getSocketEcoute().receive(recvPacket);
-                    System.out.println("t'as reçu");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // System.out.println("Jai recu le message >>> non bloqué ");
-
-                String recvStr = new String(recvPacket.getData(), 0, recvPacket.getLength());
-
-	    	            InetAddress addr = recvPacket.getAddress();
-	    	            int port = recvPacket.getPort();
-	    	            System.out.println("je vais ajouter sur le port   :  :  : : : "  + port);
-                            
-	    	            user.setListUser(recvStr,addr.toString().substring(1)+"-"+port);
-            }
-        }
 
     public static void receiveMessage() throws IOException {   //UDP : boucle qui recoit les messages udp broadcast pour voir qui est en ligne
-                    System.out.println("THREAD COURANT ::::::     "+Thread.currentThread().toString());
-
         while(true){
            // System.out.println("Jattends de recevoir un message <<< bloqué" + "temps : " + System.currentTimeMillis());
 
@@ -88,22 +44,19 @@ public class ThreadReceive extends Thread {
             }
             
             else if(recvStr.contains("quito")){
-                System.out.print("etat du socket : "+ User.getSocketEcoute());
-                Main.user.removeSocketList(recvPacket.getPort());
+             //   Main.user.removeSocketList(recvPacket.getPort());
             }
+            
             else {
-	            if( !Main.user.belongList(recvStr)){
-	                InetAddress addr = recvPacket.getAddress();
-		            int port = recvPacket.getPort();
-                            System.out.println("port >>>>>>>> " + port);
-		            sendMessage(addr, port);
-            		if(recvStr.contains("quiti")){}
-                        else {
-                            System.out.println("PPPPOOORRRTTT "+ port);
-                    ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
-                        }
-	            }
+            if( !Main.user.belongList(recvStr)){
+                InetAddress addr = recvPacket.getAddress();
+            int port = recvPacket.getPort();
+            System.out.println("JE LAI RECU AVEC LE PORT : "+ port );
+            sendMessage(addr, port);
+            ajoutUserListe(recvStr,addr.toString().substring(1)+"-"+port);
             }
+            }
+          
         }
     }
     
@@ -119,7 +72,7 @@ public class ThreadReceive extends Thread {
         DatagramPacket packet = new DatagramPacket(data.getBytes(),
                 data.getBytes().length, address, 45047);
         //System.out.println("J'ai renvoyé mon paquet apres l'ecoute sur le port : " + 45047);
-        User.getSocketEcoute().send(packet);
+        User.getSocketEnvoi().send(packet);
     }
     
     public synchronized static void ajoutUserListe(String pseudo, String ip){

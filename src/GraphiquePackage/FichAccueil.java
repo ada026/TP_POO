@@ -6,32 +6,24 @@
 package GraphiquePackage;
 
 import SourcePackage.Main;
-import SourcePackage.ThreadReceive;
 import SourcePackage.User;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
-
-import static java.lang.Thread.sleep;
 
 /**
  *
  * @author elyes
  */
-
-	
-
 public class FichAccueil extends javax.swing.JFrame {
 
     /**     * Creates new form FichMenu
      */
-	
-	private static int i = 0;
     private FichMenu menu;
+    
     
     public FichAccueil() {
         
-    	
+
        initComponents();
 
     }
@@ -105,46 +97,12 @@ public class FichAccueil extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
            String a = Pseudo.getText();
-           
-           Main.user.sendMessageUDP("quiti",Main.user.getPort());
-           ThreadReceive threadReceive = new ThreadReceive("quiti",Main.user);
-           threadReceive.start();
-           System.out.println("J'ai lancé le thread");
-           
-
-        	   	System.out.println("hash dans le while");
-           	System.out.println(Main.user.getListUser().toString());
-	          
-           	if(i < 1) {
-	           	try {
-					sleep(3000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-           	}
-           i++;
-           if(Main.user.getListUser().containsKey(a))
-	    	   		System.out.println("pareil gros");
-	       else if (!Main.user.getListUser().containsKey(a)){
-	   	   		threadReceive = new ThreadReceive("thread",Main.user);
-	   	   		Main.user.removeUserList("quiti");
-	   	           System.out.println("hash actuelle");
-	   	           System.out.println(Main.user.getListUser().toString());
-	   	   		Main.user.setPseudo(a);
-	   	   		Main.user.startThread();
-	   	   		menu = new FichMenu(this, false);
-	           	this.setVisible(false);
-	           	menu.setVisible(true);
-	           	Main.setFichMenu(menu); 
-                        System.out.println("POOOOOOORT : >>>>>>>" + Main.user.getPort());
-	       }
-	       else if(!Main.user.getListUser().toString().contains("quiti")) {
-	    	   		System.out.println("mmmmh");
-	       }
-           
+           Main.launchUser(a);
+            menu = new FichMenu(this, false);
+            this.setVisible(false);
+            menu.setVisible(true);
             
-            
+            Main.setFichMenu(menu);
             
     }//GEN-LAST:event_jButton1ActionPerformed
 

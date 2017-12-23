@@ -22,26 +22,9 @@ public class User {
     private HashMap<Integer,Socket> listSocket;
     private ArrayList<FichCom> listFichCom;
     private PrintWriter writer = null;
-    private HashMap<String, String> listUser ;
+    private HashMap<String, String> listUser ;  //jai recu sur mon port d'udp mais je veux fermer celui de tcp  ? comment recup ce port ??????
 
-    public User(int i) {
-    		this.pseudo = String.valueOf(pseudo);
-    		try {
-
-    	        listFichCom = new ArrayList<>();
-    	        listUser = new HashMap<>();
-    	        listSocket = new HashMap();
-				this.socketEnvoi = new DatagramSocket();
-
-	            this.socketEcoute = new DatagramSocket(45047);
-			} catch (SocketException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    }
-    
-    public User(){
-        this.pseudo = "quiti";
+    public User(String pseudo){
         listFichCom = new ArrayList<>();
         listUser = new HashMap<>();
         listSocket = new HashMap();
@@ -53,6 +36,7 @@ public class User {
         catch (SocketException e) {
             e.printStackTrace();
         }
+        this.pseudo = pseudo;
         
         System.out.println("J'ai crée un utilisateur ; son pseudo est : " + pseudo );
     }
@@ -71,16 +55,23 @@ public class User {
     public void sendMessageUDP(String message,int port){
         String data = "" ;
         
-        if(message != null && message.equals("quiti"))
-        		data = message;
-        else if(message != null ){
+        if(message != null){
+            
+        
+        
+        if(message.contains("quita") ){
             data = message+"-"+pseudo;
+            
+        }
+        else if(message.contains("quito")){
+            data = message+"-"+port;
             listSocket.remove(port);
         }
+        }
+        
         else {
             data = Main.user.getPseudo();
         }
-        
         
         System.out.println(Main.user);
         try {
@@ -170,7 +161,7 @@ public class User {
     }
     
     public void setListUser(String pseudo, String ipPort){
-        System.out.println("PSEUUUUDO : "+ pseudo +" \n IPPORTTT ::: " + ipPort);
+        System.out.println("JE PUT AVEC PSEUDO : " + pseudo + " ET IP-PORT  : " + ipPort);
         this.listUser.put(pseudo, ipPort);
     }
     
@@ -182,6 +173,7 @@ public class User {
     public void removeSocketList(int port){
         System.out.println("J'ai fermé la co !!! ");
         try {
+            System.out.println("PORT QUE JE VAIS FERMER " + port);
             listSocket.get(port).close();
         } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,6 +204,5 @@ public class User {
         listSocket.put(socket.getPort(), socket);
     }
     
-
     
 }
