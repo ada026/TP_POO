@@ -27,6 +27,7 @@ public class ThreadReceiveTCPFinal extends Thread {
 	        BufferedReader reader = new BufferedReader(stream);
 	        System.out.println("Je vais lire1");
 	        while(socket.isConnected()) {
+                    
 	        		String a = reader.readLine();
 	        		if(a != null){
                                     if(a.equals("quita")){
@@ -36,9 +37,9 @@ public class ThreadReceiveTCPFinal extends Thread {
                                 }
 	        }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("une communication en cours a été fermée ");
 		}
+                
         
 	}
 	

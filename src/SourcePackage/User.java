@@ -65,6 +65,7 @@ public class User {
         }
         else if(message.contains("quito")){
             data = message+"-"+port;
+            removeSocketList(port);
             listSocket.remove(port);
         }
         }
